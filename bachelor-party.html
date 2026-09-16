@@ -1,0 +1,343 @@
+<title>Jason's Bachelor Party</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Barlow:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --ink:#2a2420;
+    --ink-dim:#726456;
+    --bg:#ece3d3;
+    --bg-2:#f7f1e5;
+    --line:rgba(42,36,32,0.16);
+    --slate:#3c5568;
+    --slate-dim:rgba(60,85,104,0.14);
+    --rust:#a8461f;
+    --rust-dim:rgba(168,70,31,0.14);
+    --amber:#a97a1e;
+    --amber-dim:rgba(169,122,30,0.16);
+    --forest:#33573a;
+    --forest-dim:rgba(51,87,58,0.14);
+    --oxblood:#7c342a;
+    --oxblood-dim:rgba(124,52,42,0.14);
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Barlow',system-ui,sans-serif;
+    margin:0;
+    padding-inline:20px;
+    padding-block:0;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+
+  .display{font-family:'Oswald',system-ui,sans-serif;font-weight:600;letter-spacing:0.01em;text-transform:uppercase;text-wrap:balance;}
+  .mono{font-family:'JetBrains Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding-block:56px 36px;
+    text-align:center;
+    border-bottom:3px solid var(--ink);
+  }
+  .hero .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    color:var(--rust);
+    text-transform:uppercase;
+    text-align:center;
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-size:clamp(2.3rem,8.5vw,4.3rem);
+    line-height:1.05;
+    margin:0 0 20px;
+    color:var(--ink);
+    text-align:center;
+  }
+  .section-title{
+    font-family:'Oswald',system-ui,sans-serif;
+    font-weight:600;
+    font-size:1.15rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    text-align:center;
+    color:var(--ink);
+    margin:0 0 26px;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{padding-block:32px 24px;display:flex;flex-direction:column;gap:0;}
+
+  .stop{
+    display:grid;
+    grid-template-columns:56px 1fr;
+    gap:20px;
+    padding:28px 24px 32px;
+    background:var(--bg-2);
+    border:2px solid var(--accent);
+    border-radius:14px;
+    box-shadow:5px 5px 0 var(--accent-dim);
+    opacity:0;
+    transform:translateY(14px);
+    transition:opacity 0.5s ease, transform 0.5s ease;
+    margin-bottom:22px;
+  }
+  .stop.in{opacity:1;transform:translateY(0);}
+
+  .stop .num{
+    font-family:'Oswald',system-ui,sans-serif;
+    font-weight:600;
+    font-size:2.1rem;
+    line-height:1;
+    color:var(--accent);
+  }
+
+  .stop .body{min-width:0;}
+
+  .time{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.95rem;
+    color:var(--ink-dim);
+    margin-bottom:8px;
+  }
+
+  .venue{
+    font-family:'Oswald',system-ui,sans-serif;
+    font-weight:600;
+    font-size:clamp(1.35rem,4.5vw,1.85rem);
+    line-height:1.2;
+    margin:0 0 14px;
+    color:var(--ink);
+  }
+
+  .blurb{
+    font-size:1.02rem;
+    line-height:1.55;
+    color:var(--ink-dim);
+    margin:0 0 18px;
+    max-width:56ch;
+  }
+
+  .addr{
+    display:flex;
+    gap:8px;
+    align-items:baseline;
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+    color:var(--ink-dim);
+    margin-bottom:20px;
+  }
+  .addr svg{flex:none;translate:0 2px;}
+
+  .actions{display:flex;flex-wrap:wrap;gap:10px;}
+
+  .btn{
+    font-family:'Barlow',sans-serif;
+    font-weight:600;
+    font-size:0.92rem;
+    text-decoration:none;
+    padding:11px 18px;
+    border-radius:8px;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:filter 0.15s ease, transform 0.15s ease;
+  }
+  .btn:hover{filter:brightness(1.12);transform:translateY(-1px);}
+  .btn:active{transform:translateY(0);}
+  .btn.primary{background:var(--accent);color:#f7f1e5;}
+  .btn.ghost{background:transparent;color:var(--ink);border:2px solid var(--line);}
+  .btn:focus-visible{outline:2px solid var(--ink);outline-offset:2px;}
+
+  .stop[data-accent="slate"]{--accent:var(--slate);--accent-dim:var(--slate-dim);}
+  .stop[data-accent="rust"]{--accent:var(--rust);--accent-dim:var(--rust-dim);}
+  .stop[data-accent="amber"]{--accent:var(--amber);--accent-dim:var(--amber-dim);}
+  .stop[data-accent="forest"]{--accent:var(--forest);--accent-dim:var(--forest-dim);}
+  .stop[data-accent="oxblood"]{--accent:var(--oxblood);--accent-dim:var(--oxblood-dim);}
+
+  /* ---------- Commute connector ---------- */
+  .commute{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:10px 6px 10px 26px;
+    margin-bottom:22px;
+    color:var(--ink-dim);
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+  }
+  .commute svg{flex:none;color:var(--ink-dim);}
+  .commute .line{
+    flex:none;
+    width:2px;
+    align-self:stretch;
+    background:repeating-linear-gradient(to bottom, var(--ink-dim) 0 4px, transparent 4px 9px);
+    opacity:0.55;
+    margin-right:2px;
+  }
+  .commute b{color:var(--ink);font-weight:600;}
+
+  /* ---------- Footer ---------- */
+  footer{
+    padding-block:44px 60px;
+    text-align:center;
+  }
+  footer p{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.85rem;
+    color:var(--ink-dim);
+    letter-spacing:0.02em;
+  }
+  footer .rule{
+    width:44px;height:4px;background:var(--rust);
+    margin:0 auto 22px;border-radius:2px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .stop{transition:none;opacity:1;transform:none;}
+  }
+
+  @media (max-width:480px){
+    .stop{grid-template-columns:40px 1fr;gap:12px;}
+    .stop .num{font-size:1.8rem;}
+    .commute{padding-left:18px;}
+  }
+</style>
+
+<div class="wrap">
+
+  <section class="hero">
+    <p class="eyebrow">September 18, 2026 &middot; Rohnert Park, CA</p>
+    <h1 class="display">Jason's Bachelor Party</h1>
+  </section>
+
+  <section class="timeline">
+
+    <h2 class="section-title">Schedule of the Day</h2>
+
+    <article class="stop" data-accent="slate">
+      <div class="num display">01</div>
+      <div class="body">
+        <p class="time">9:45 AM</p>
+        <h2 class="venue">Pickup &mdash; Jason</h2>
+        <p class="addr">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          Redwood Shores, CA
+        </p>
+      </div>
+    </article>
+
+    <div class="commute">
+      <div class="line"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/></svg>
+      <span><b>(&asymp;1 hr 20 min)</b> Commute: Redwood Shores &rarr; Parliament Brewing Co. &mdash; 75 mi via US-101 N</span>
+    </div>
+
+    <article class="stop" data-accent="amber">
+      <div class="num display">02</div>
+      <div class="body">
+        <p class="time">11:30 AM &ndash; 1:00 PM</p>
+        <h2 class="venue">Parliament Brewing Co.</h2>
+        <p class="addr">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          5865 Labath Ave, Rohnert Park, CA 94928
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=5865+Labath+Ave%2C+Rohnert+Park%2C+CA+94928" target="_blank" rel="noopener">Get Directions</a>
+          <a class="btn ghost" href="https://www.parliamentbrewing.com/" target="_blank" rel="noopener">Website</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="commute">
+      <div class="line"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/></svg>
+      <span><b>(&asymp;5 min)</b> Commute: Parliament Brewing &rarr; Axcelerate &mdash; 2 mi</span>
+    </div>
+
+    <article class="stop" data-accent="rust">
+      <div class="num display">03</div>
+      <div class="body">
+        <p class="time">1:15 PM &ndash; 2:45 PM</p>
+        <h2 class="venue">Axcelerate Axe Throwing</h2>
+        <p class="addr">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          4601 Redwood Drive, Rohnert Park, CA 94928
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=4601+Redwood+Drive%2C+Rohnert+Park%2C+CA+94928" target="_blank" rel="noopener">Get Directions</a>
+          <a class="btn ghost" href="https://rohnertpark.nitrocityracing.com/axcelerate" target="_blank" rel="noopener">Website</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="commute">
+      <div class="line"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/></svg>
+      <span><b>(&asymp;10 min)</b> Commute: Axcelerate &rarr; Graton Casino &mdash; 4 mi</span>
+    </div>
+
+    <article class="stop" data-accent="forest">
+      <div class="num display">04</div>
+      <div class="body">
+        <p class="time">3:00 PM &ndash; 7:00 PM</p>
+        <h2 class="venue">Graton Resort &amp; Casino</h2>
+        <p class="addr">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          288 Golf Course Dr W, Rohnert Park, CA 94928
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=288+Golf+Course+Dr+W%2C+Rohnert+Park%2C+CA+94928" target="_blank" rel="noopener">Get Directions</a>
+          <a class="btn ghost" href="https://graton.com/" target="_blank" rel="noopener">Website</a>
+        </div>
+      </div>
+    </article>
+
+    <div class="commute">
+      <div class="line"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 13l1.5-4.5A2 2 0 0 1 6.4 7h11.2a2 2 0 0 1 1.9 1.5L21 13"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-4z"/><circle cx="7.5" cy="17.5" r="1.2"/><circle cx="16.5" cy="17.5" r="1.2"/></svg>
+      <span><b>(&asymp;15 min)</b> Commute: Graton Casino &rarr; Stark's &mdash; 7 mi</span>
+    </div>
+
+    <article class="stop" data-accent="oxblood">
+      <div class="num display">05</div>
+      <div class="body">
+        <p class="time">7:45 PM &middot; Dinner Reservation</p>
+        <h2 class="venue">Stark's Steak &amp; Seafood</h2>
+        <p class="addr">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.5-7-12a7 7 0 0 1 14 0c0 5.5-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          521 Adams St, Santa Rosa, CA 95401
+        </p>
+        <div class="actions">
+          <a class="btn primary" href="https://www.google.com/maps/dir/?api=1&amp;destination=521+Adams+St%2C+Santa+Rosa%2C+CA+95401" target="_blank" rel="noopener">Get Directions</a>
+          <a class="btn ghost" href="https://starkssteakhouse.com/?showMenu" target="_blank" rel="noopener">View Menu</a>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <footer>
+    <div class="rule"></div>
+    <p>Schedule subject to change depending on what the groom is feeling!</p>
+  </footer>
+
+</div>
+
+<script>
+  try{
+    var stops = document.querySelectorAll('.stop');
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, {threshold:0.15});
+      stops.forEach(function(s){ io.observe(s); });
+    } else {
+      stops.forEach(function(s){ s.classList.add('in'); });
+    }
+  }catch(e){}
+</script>
